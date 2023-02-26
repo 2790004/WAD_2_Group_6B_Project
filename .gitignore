@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+SUPA_Triple_Rumble_Project/db.sqlite3
