@@ -4,7 +4,7 @@ from django.urls import include
 from SUPA_Triple_Rumble_Tournament import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('staff/', views.staff, name='staff'),
     path('profile/', views.profile, name='profile'),

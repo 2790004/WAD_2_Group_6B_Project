@@ -4,12 +4,12 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-def index(request):
-    return HttpResponse("Index.")
+def home(request):
+    return render(request, 'SUPA_Triple_Rumble_Tournament/homepage.html')
 
 
 def about(request):
-    return HttpResponse("About.")
+    return render(request, 'SUPA_Triple_Rumble_Tournament/about.html')
 
 
 def staff(request):
@@ -33,7 +33,7 @@ def sign_up(request):
 
 
 def teams(request):
-    return HttpResponse("Teams")
+    return render(request, 'SUPA_Triple_Rumble_Tournament/teams.html')
 
 
 def create_team(request):
@@ -41,5 +41,5 @@ def create_team(request):
 
 
 def tournaments(request):
-    return HttpResponse("Tournament.")
+    return render(request, 'SUPA_Triple_Rumble_Tournament/tournaments.html')
 
