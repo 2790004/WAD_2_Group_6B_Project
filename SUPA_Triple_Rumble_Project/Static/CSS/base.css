@@ -12,8 +12,8 @@
     }
 }
 .b-example-divider {
-    height: 3rem;
-    background-color: rgba(0, 0, 0, .1);
+    height: 0rem;
+    background-color: rgb(106, 146, 201);
     border: solid rgba(0, 0, 0, .15);
     border-width: 1px 0;
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
@@ -46,10 +46,10 @@
 }
 body {
     min-height: 45rem;
-    padding-top: 4rem;
+    background-color: #ffffff;
 }
 .footer{
-    position: absolute;
+    position: sticky;
     bottom: 0;
     width: 100%;
     height: 60px;
@@ -61,4 +61,23 @@ body {
 }
 .dropdown-toggle {
   outline: 0;
+}
+.wrap{
+
+height: 300px;
+
+overflow-x: auto;
+
+overflow-y: hidden;
+
+white-space: nowrap;
+
+}
+
+.b{
+
+width: 200px;
+
+height: 100px;
+
 }

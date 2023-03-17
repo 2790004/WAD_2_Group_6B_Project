@@ -1,4 +1,15 @@
 from django.contrib import admin
-import SUPA_Triple_Rumble_Tournament.models
+
 
 # Register your models here.
+
+
+class PageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'url')
+
+
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'views', 'likes')
+    prepopulated_fields = {'slug': ('name',)}
+
+

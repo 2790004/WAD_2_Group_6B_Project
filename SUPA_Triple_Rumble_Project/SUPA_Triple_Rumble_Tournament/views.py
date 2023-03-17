@@ -1,10 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse
-
 
 # Create your views here.
 
 def home(request):
+
     return render(request, 'SUPA_Triple_Rumble_Tournament/homepage.html')
 
 
@@ -28,6 +29,11 @@ def login(request):
     return HttpResponse("Login.")
 
 
+@login_required
+def logout(request):
+    return HttpResponse("Logout.")
+
+
 def sign_up(request):
     return HttpResponse("Sign up.")
 
@@ -42,4 +48,3 @@ def create_team(request):
 
 def tournaments(request):
     return render(request, 'SUPA_Triple_Rumble_Tournament/tournaments.html')
-

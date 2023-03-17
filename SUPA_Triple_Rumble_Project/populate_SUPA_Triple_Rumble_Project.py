@@ -8,11 +8,10 @@ django.setup()
 
 
 def populate():
+
     return None
 
 
 if __name__ == '__main__':
     print('Starting rango population script...')
     populate()
-
-

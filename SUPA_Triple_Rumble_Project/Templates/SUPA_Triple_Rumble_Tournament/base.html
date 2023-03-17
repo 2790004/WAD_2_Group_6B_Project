@@ -18,26 +18,28 @@
             {% endblock %}
         </title>
         <!-- Icon -->
-            <script src="https://kit.fontawesome.com/266b9620ef.js" crossorigin="anonymous"></script>
 
     </head>
     <body>
-        <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}" data-bs-theme="dark">SUPA-Tournament</a>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
+                <a class="navbar-brand" href="{% url 'home' %}" data-bs-theme="dark">
+                    <img src="{% static 'images/project_logo.png' %}" height="40", width="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse offcanvas offcanvas-start" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Homepage</a></li>
                         <li class="nav-item active"><a class="nav-link" href="{% url 'teams' %}">Teams</a></li>
                         <li class="nav-item active"><a class="nav-link" href="{% url 'tournaments' %}">Tournaments</a></li>
                         <li class="nav-item active"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-
                     </ul>
                     <form class="d-flex col-lg-6" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                </div>
                     {% if not user.is_authenticated %}
                         <div class="col-2 text-end">
                             <button type="button" class="btn btn-outline-primary me-2">Login</button>
@@ -57,6 +59,7 @@
                             </ul>
                         </div>
                     {% endif %}
+                </div>
             </div>
         </nav>
         <main class="flex-shrink-0">
@@ -64,7 +67,7 @@
             {% endblock %}
         </main>
 
-        <footer class="footer mt-auto py-3 bg-light">
+        <footer class="footer mt-auto py-3 bg-light sticky-bottom">
             <div class="container">
                 <span class="text-muted">
                     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -72,6 +75,9 @@
                         <li class="nav-item"><a href="{% url 'teams' %}" class="nav-link px-2 text-muted">Teams</a></li>
                         <li class="nav-item"><a href="{% url 'tournaments' %}" class="nav-link px-2 text-muted">Tournaments</a></li>
                         <li class="nav-item"><a href="{% url 'about' %}" class="nav-link px-2 text-muted">About</a></li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link px-2 text-muted">Profile</a></li>
+                        {% endif %}
                     </ul>
                     <p class="text-center text-muted">&copy; 2023, WAD2 Group 6B, SUPA Tournament Project.</p>
                 </span>
@@ -81,9 +87,8 @@
         <!-- Basic JavaScript -->
         <script type="text/javascript" src="{% static 'JavaScript/base.js' %}"></script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="{% static 'JavaScript/jquery-3.3.1.slim.min.js' %}"></script>
-        <script>window.jQuery || document.write('<script src="{% static 'JavaScript/jquery-3.3.1.slim.min.js' %}"><\/script>')</script>
-        <script src="{% static 'JavaScript/popper.min.js' %}"></script>
-        <script src="{% static 'JavaScript/bootstrap.bundle.min.js' %}" ></script>
+        <script src="{% static 'JavaScript/Bootstrap/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="{% static 'JavaScript/Bootstrap/popper.min.js' %}"></script>
+        <script src="{% static 'JavaScript/Bootstrap/bootstrap.bundle.min.js' %}"></script>
     </body>
 </html>
