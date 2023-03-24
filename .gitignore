@@ -128,4 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-SUPA_Triple_Rumble_Project/db.sqlite3
+Tournament/db.sqlite3
+Tournament/session_storage
