@@ -164,7 +164,7 @@ SESSION_COOKIE_NAME = "sessionid"
 SESSION_COOKIE_AGE = 31556927
 
 # SimpleUI settings
-SIMPLEUI_LOGO = '/{}/img/project_logo.png'.format(static_token_str)
+SIMPLEUI_LOGO = '/{}/images/project_logo.png'.format(static_token_str)
 SIMPLEUI_DEFAULT_THEME = 'admin.lte.css'
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False
