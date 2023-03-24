@@ -18,8 +18,3 @@ class TeamsTest(TestCase):
     def test_from_tournament_get_team_list_exists(self):
         template_base_path = os.path.join(settings.TEMPLATE_DIR, 'Team/from_tournament_get_team_list.html')
         self.assertTrue(os.path.exists(template_base_path))
-
-
-
-
-

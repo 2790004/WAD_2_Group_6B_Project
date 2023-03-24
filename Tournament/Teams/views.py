@@ -10,7 +10,7 @@ from django.http import QueryDict
 
 # Create your views here.
 
-# team list page
+# Team List Page
 def list(request):
     try:
         tournaments = Tournaments.objects.all()
@@ -20,7 +20,7 @@ def list(request):
         return HttpResponse('Team List Page Error')
 
 
-# Click on tournament, ajax to get the teams under it
+# Click on the tournament to use ajax to get the teams under it
 def from_tournament_get_team_list(request):
     try:
         if request.method == 'GET':
@@ -147,7 +147,7 @@ def from_team_remove_user(request):
         return HttpResponse('from_team_remove_user Error')
 
 
-# User apply to join the team
+# user apply to join team
 def join_exit_team(request):
     try:
         user_id = request.session['user_id']
@@ -184,13 +184,13 @@ def chang_join_state(request):
     team_id = team_id.lstrip('id-')
     print(join_state, team_id, user_id)
 
-    if join_state == 'false':  # request to join team
+    if join_state == 'false':  # apply to join 申请加入
         team_q = Teams.objects.filter(Q(id=team_id) & ~Q(team_leader__id=user_id) & ~Q(member__id=user_id))
         if team_q:
             team = team_q.first()
             team.member.add(user)
             return HttpResponse('1')
-    elif join_state == 'true':  # request to exit team
+    elif join_state == 'true':  # apply to exit 申请退出
         team_q = Team2User.objects.filter(Q(team_id=team_id) & Q(user_id=user_id))
         if team_q:
             team_q.delete()
