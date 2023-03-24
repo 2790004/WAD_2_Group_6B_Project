@@ -6,9 +6,11 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from .forms import create_team_get, create_team_post
 from django.http import QueryDict
+
+
 # Create your views here.
 
-#队伍列表页
+# team list page
 def list(request):
     try:
         tournaments = Tournaments.objects.all()
@@ -17,7 +19,8 @@ def list(request):
         print('home:{}'.format(e))
         return HttpResponse('Team List Page Error')
 
-#点击tournament ajax 获取其下的teams
+
+# Click on tournament, ajax to get the teams under it
 def from_tournament_get_team_list(request):
     try:
         if request.method == 'GET':
@@ -33,10 +36,10 @@ def from_tournament_get_team_list(request):
                 i.team2user = Team2User.objects.filter(Q(team_id=i.id) & Q(active=True))
                 teams.append(i)
 
-
         print('teams', teams)
         if teams:
-            html = render_to_string('Team/from_tournament_get_team_list.html', {**locals(), **base_context(request)}, request)
+            html = render_to_string('Team/from_tournament_get_team_list.html', {**locals(), **base_context(request)},
+                                    request)
         else:
             html = ''
         return HttpResponse(html)
@@ -44,7 +47,8 @@ def from_tournament_get_team_list(request):
         print('home:{}'.format(e))
         return HttpResponse('from_tournament_get_team_list Error')
 
-#我是队伍创建人的时候，管理队成员
+
+# When creating a team, manage team members
 def manage_team(request):
     try:
         user_id = request.session['user_id']
@@ -65,7 +69,8 @@ def manage_team(request):
         print('manage_team:{}'.format(e))
         return HttpResponse('manage_team Error')
 
-#创建队伍
+
+# Create a team
 def create_team(request):
     try:
         user_id = request.session['user_id']
@@ -94,7 +99,8 @@ def create_team(request):
         print('create_team:{}'.format(e))
         return HttpResponse('create_team Error')
 
-#同意成员入队
+
+# Agree to join the team
 def agree_user_join_team(request):
     try:
         user_id = request.session['user_id']
@@ -103,7 +109,8 @@ def agree_user_join_team(request):
         if not user_id or not team_id or not applicant_id:
             return HttpResponse('user team applicant error')
 
-        actions = Team2User.objects.filter(Q(team__team_leader_id=user_id) & Q(team_id=team_id) & Q(user_id=applicant_id) & Q(active=False))
+        actions = Team2User.objects.filter(
+            Q(team__team_leader_id=user_id) & Q(team_id=team_id) & Q(user_id=applicant_id) & Q(active=False))
         print('actions', actions)
         if actions:
             c_actions = actions.first()
@@ -117,7 +124,8 @@ def agree_user_join_team(request):
         print('agree_user_join_team:{}'.format(e))
         return HttpResponse('agree_user_join_team Error')
 
-#移除队伍成员
+
+# remove user from team
 def from_team_remove_user(request):
     try:
         user_id = request.session['user_id']
@@ -126,7 +134,8 @@ def from_team_remove_user(request):
         if not user_id or not team_id or not applicant_id:
             return HttpResponse('user team applicant error')
 
-        actions = Team2User.objects.filter(Q(team__team_leader_id=user_id) & Q(team_id=team_id) & Q(user_id=applicant_id) & Q(active=True))
+        actions = Team2User.objects.filter(
+            Q(team__team_leader_id=user_id) & Q(team_id=team_id) & Q(user_id=applicant_id) & Q(active=True))
         print('actions', actions)
         if actions:
             actions.delete()
@@ -137,7 +146,8 @@ def from_team_remove_user(request):
         print('from_team_remove_user:{}'.format(e))
         return HttpResponse('from_team_remove_user Error')
 
-#用户申请加入某队
+
+# User apply to join the team
 def join_exit_team(request):
     try:
         user_id = request.session['user_id']
@@ -153,13 +163,13 @@ def join_exit_team(request):
                 i.joined_state = False
             teams.append(i)
 
-
         return render(request, 'Team/join_exit_team.html', {**locals(), **base_context(request)})
     except Exception as e:
         print('join_exit_team:{}'.format(e))
         return HttpResponse('join_exit_team Error')
 
-#入队退队ajax请求
+
+# Enqueue and dequeue ajax request
 def chang_join_state(request):
     if request.method == 'GET':
         return HttpResponse('please use POST method')
@@ -174,17 +184,16 @@ def chang_join_state(request):
     team_id = team_id.lstrip('id-')
     print(join_state, team_id, user_id)
 
-    if join_state == 'false':#申请加入
+    if join_state == 'false':  # request to join team
         team_q = Teams.objects.filter(Q(id=team_id) & ~Q(team_leader__id=user_id) & ~Q(member__id=user_id))
         if team_q:
             team = team_q.first()
             team.member.add(user)
             return HttpResponse('1')
-    elif join_state == 'true':#申请退出
+    elif join_state == 'true':  # request to exit team
         team_q = Team2User.objects.filter(Q(team_id=team_id) & Q(user_id=user_id))
         if team_q:
             team_q.delete()
             return HttpResponse('1')
 
     return HttpResponse('unknown')
-

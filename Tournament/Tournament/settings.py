@@ -140,7 +140,7 @@ if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
 # Static files (CSS, JavaScript, Images)
-static = 'static/'
+static = '/static/'
 static_token_str = 'files'
 STATIC_URL = '/' + static_token_str + '/'
 
