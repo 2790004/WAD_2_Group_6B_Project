@@ -140,7 +140,7 @@ if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
 # Static files (CSS, JavaScript, Images)
-static = 'static/'
+static = '/static/'
 static_token_str = 'files'
 STATIC_URL = '/' + static_token_str + '/'
 
@@ -164,7 +164,7 @@ SESSION_COOKIE_NAME = "sessionid"
 SESSION_COOKIE_AGE = 31556927
 
 # SimpleUI settings
-SIMPLEUI_LOGO = '/{}/img/project_logo.png'.format(static_token_str)
+SIMPLEUI_LOGO = '/{}/images/project_logo.png'.format(static_token_str)
 SIMPLEUI_DEFAULT_THEME = 'admin.lte.css'
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False
