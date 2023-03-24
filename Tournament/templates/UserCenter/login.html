@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <div class="register-box hold-transition register-page">
+
+
+        <div class="register-box-body">
+<h3 class="login-box-msg" style="color: rgba(15,123,159,0.82)">Welcome Back</h3>
+            <p class="login-box-msg">Login</p>
+{{ errors_message }}
+            <form action="/UserCenter/login/" method="post">
+                {% csrf_token %}
+                <div class="form-group has-feedback">
+                    <input type="text" name="user_name_email" class="form-control" placeholder="User Name Or Email">
+
+
+                    <span class="form-control-feedback" style="right: 5px;">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </span>
+                </div>
+
+                <div class="form-group has-feedback">
+
+                    {{ forms.password }}
+
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+
+                        <button type="submit" class="btn btn-primary btn-block btn-flat center-block">Login</button>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <p>- OR -</p>
+
+                <a href="/UserCenter/register/" class="text-center">Register a new membership</a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+
+{% block bottom %}
+<script>
+
+</script>
+{% endblock %}

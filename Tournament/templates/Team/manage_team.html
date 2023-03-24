@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="container-fluid">
+            <div style="padding-top: 90px;">
+                    {% for team in teams %}
+                    <div class="col-md-6">
+                        <div class="box box-danger">
+                            <div class="box-header">
+                                <div class="products-list">
+                                    <img style="max-width: 50px; max-height: 50px; float: right" class="img-responsive pull-right" src="{{ team.picture.all.first.picture.url }}" alt="Image">
+                                    <label class="box-title">{{ team.name }}
+                                        {% if team.active %}
+                                        <small class="label label-primary" style="margin-left: 20px;">Active</small>
+                                        {% else %}
+                                        <small class="label label-primary" style="margin-left: 20px;">Inactive</small>
+                                        {% endif %}
+                                    </label><br>
+                                    <h6>
+                                        {% if team.description %}
+                                        {{ team.description }}
+                                        {% endif %}
+                                    </h6>
+                                    {% for tournament in team.tournaments.all %}
+                                    <a href="/Tournaments/index/?id={{ tournament.id }}" style="white-space:nowrap;margin-left: 8px;">{{ tournament.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <ul class="todo-list">
+                                    <li>
+                                        <a href="javascript:void(0);" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;display: inline-block;width: 100%">
+                                            <img src="{{ team.team_leader.profile_picture.all.first.picture.url }}" style="max-width: 25px; max-height: 25px;">
+                                            <span class="text">{{ team.team_leader.user_name }}</span>
+                                            <small class="label label-warning">
+                                                <i class="fa fa-flag-checkered"></i>
+                                                Team Leader
+                                            </small>
+                                            <small class="label label-default">
+                                                <i class="fa fa-thumbs-o-up"></i>
+                                                {{ team.team_leader.skillset }}
+                                            </small>
+                                        </a>
+                                    </li>
+                                    {% for team2user in team.team2user %}
+
+                                    <li style="overflow: hidden">
+                                        <div class="row">
+                                        <div class="col-sm-2">
+
+                                            {% if team2user.active %}
+                                            <button class="btn btn-xs btn-success" onclick="from_team_remove_user('{{ team.id }}', '{{ team2user.user.id }}');">Remove</button>
+                                            {% else %}
+                                            <button class="btn btn-xs btn-success" onclick="agree_user_join_team('{{ team.id }}', '{{ team2user.user.id }}');">Agree</button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <a href="javascript:void(0);" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;display: inline-block;width: 100%">
+                                                <img src="{{ team2user.user.profile_picture.all.first.picture.url }}" style="max-width: 25px; max-height: 25px;">
+                                                <span class="text">{{ team2user.user.user_name }}</span>
+
+
+                                                <small class="label label-default">
+                                                    <i class="fa fa-thumbs-o-up"></i>
+                                                    {{ team2user.user.skillset }}
+                                                </small>
+                                            </a>
+                                        </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block bottom %}
+<script>
+    function agree_user_join_team(team_id, applicant_id) {
+        var form_data = new FormData();
+        form_data.append('team_id', team_id);
+        form_data.append('applicant_id', applicant_id);
+        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+        $.ajax({
+            url: '/Teams/agree_user_join_team/',
+            type: 'post',
+            data: form_data,
+            dataType: 'text',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data == '1'){
+                    location.reload();
+                }
+            }
+        });
+    }
+
+    function from_team_remove_user(team_id, applicant_id) {
+        var form_data = new FormData();
+        form_data.append('team_id', team_id);
+        form_data.append('applicant_id', applicant_id);
+        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+        $.ajax({
+            url: '/Teams/from_team_remove_user/',
+            type: 'post',
+            data: form_data,
+            dataType: 'text',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data == '1'){
+                    location.reload();
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

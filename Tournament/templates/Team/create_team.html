@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="register-box hold-transition register-page">
+        <div class="register-box-body">
+            <p class="login-box-msg">Create Team</p>
+            {{ errors_message }}
+            {{ forms.errors }}
+            <form action="/Teams/create_team/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for form in forms %}
+                <div class="form-group">
+                    <lable>{{ form.label }}</lable>
+                    {{ form }}
+                </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat center-block">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

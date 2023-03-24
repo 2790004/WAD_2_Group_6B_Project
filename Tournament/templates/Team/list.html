@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="container-fluid">
+            <div style="padding-top: 90px;">
+                <div class="col-md-4">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <i class="fa fa-object-group"></i>
+                            <h3 class="box-title">Tournament's List</h3>
+                        </div>
+                        <div class="box-body">
+                            <ul class="products-list product-list-in-box">
+                                {% for tournament in tournaments %}
+                                    <li class="item">
+                                        <a href="javascript:void(0);"
+                                           onclick="from_tournament_get_team_list({{ tournament.id }});">
+                                            <div class="product-img">
+                                                <img src="{{ tournament.picture.picture.url }}" alt="Product Image">
+                                            </div>
+                                            <div class="product-info">
+                                                <span class="product-title">{{ tournament.name }}</span>
+                                                <span class="product-description">{{ tournament.description }}</span>
+                                                <span class="label label-default pull-right">{{ tournament.start_time }} -- {{ tournament.end_time }}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="Teams">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block bottom %}
+<script>
+    function from_tournament_get_team_list(id) {
+        var form_data = new FormData();
+        form_data.append('id', id);
+        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+        $.ajax({
+            url: '/Teams/from_tournament_get_team_list/',
+            type: 'post',
+            data: form_data,
+            dataType: 'text',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $("#Teams").html('');
+                $("#Teams").html(data);
+            }
+        });
+    }
+</script>
+{% endblock %}

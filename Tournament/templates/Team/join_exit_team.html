@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <div style="padding-top: 90px;">
+            <div class="row">
+                {% for team in teams %}
+                    <div class="col-md-6">
+                        <div class="box box-danger">
+                            <div class="box-header">
+                                <div class="products-list">
+                                    <img style="max-width: 50px; max-height: 50px; float: right" class="img-responsive pull-right" src="{{ team.picture.all.first.picture.url }}" alt="Image">
+                                    <label class="box-title">{{ team.name }}</label><br>
+                                    <h6>
+                                        {% if team2users.first.team.description %}
+                                        {{ team.description }}
+                                        {% endif %}
+                                    </h6>
+                                    {% for tournament in team.tournaments.all %}
+                                        <a href="/Tournaments/index/?id={{ tournament.id }}" style="white-space:nowrap;margin-left: 8px;">{{ tournament.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <ul class="todo-list">
+                                    <li>
+                                        <a href="javascript:void(0);" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;display: inline-block;width: 100%">
+                                            <img src="{{ team.team_leader.profile_picture.all.first.picture.url }}" style="max-width: 25px; max-height: 25px;">
+                                            <span class="text">{{ team.team_leader.user_name }}</span>
+                                            <small class="label label-warning">
+                                                <i class="fa fa-flag-checkered"></i>
+                                                Team Leader
+                                            </small>
+                                            <small class="label label-default">
+                                                <i class="fa fa-thumbs-o-up"></i>
+                                                {{ team.team_leader.skillset }}
+                                            </small>
+                                        </a>
+                                    </li>
+                                    {% for member in team.member.all %}
+                                        <li>
+                                            <a href="javascript:void(0);"
+                                               style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;display: inline-block;width: 100%">
+                                                <img src="{{ member.profile_picture.all.first.picture.url }}" style="max-width: 25px; max-height: 25px;">
+                                                <span class="text">{{ member.user_name }}</span>
+                                                <small class="label label-default">
+                                                    <i class="fa fa-thumbs-o-up"></i>
+                                                    {{ member.skillset }}
+                                                </small>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="box-footer clearfix no-border">
+                                {% if team.joined_state %}
+                                    <button onclick="chang_join_state('id-{{ team.id }}', 'false')" type="button"
+                                            class="btn btn-sm btn-default pull-right id-{{ team.id }}"
+                                            style="display: none"><i class="fa fa-plus"></i> Join Team
+                                    </button>
+                                    <button onclick="chang_join_state('id-{{ team.id }}', 'true')" type="button"
+                                            class="btn btn-sm btn-default pull-right id-{{ team.id }}"
+                                            style="display: block"><i class="fa fa-minus"></i> Exit Team
+                                    </button>
+                                {% else %}
+                                    <button onclick="chang_join_state('id-{{ team.id }}', 'false')" type="button"
+                                            class="btn btn-sm btn-default pull-right id-{{ team.id }}"
+                                            style="display: block"><i class="fa fa-plus"></i> Join Team
+                                    </button>
+                                    <button onclick="chang_join_state('id-{{ team.id }}', 'true')" type="button"
+                                            class="btn btn-sm btn-default pull-right id-{{ team.id }}"
+                                            style="display: none"><i class="fa fa-minus"></i> Exit Team
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bottom %}
+<script>
+    function chang_join_state(team_id, join_state) {
+        var form_data = new FormData();
+        form_data.append('team_id', team_id);
+        form_data.append('join_state', join_state);
+        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+        $.ajax({
+            url: '/Teams/chang_join_state/',
+            type: 'post',
+            data: form_data,
+            dataType: 'text',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data == '1'){
+                    var team_id_elements = $('.'+team_id);
+                    for (i = 0; team_id_elements.length > i; i++) {
+                        var current_ele = team_id_elements[i];
+                        if ($(current_ele).css('display') == 'block'){
+                            $(current_ele).css('display', 'none')
+                        }else {
+                            $(current_ele).css('display', 'block')
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

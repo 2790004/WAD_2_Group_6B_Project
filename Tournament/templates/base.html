@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Tournament</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/Ionicons/css/ionicons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+        <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+        {% block head %}{% endblock %}
+        <style type="text/css">
+            .navbar .navbar-nav {
+                display: inline-block;
+                float: none;
+                vertical-align: top;
+            }
+            .navbar .navbar-collapse {
+                text-align: center;
+            }
+            .top_ul > li:hover {box-shadow: -2px 1px 2px 0px rgba(0, 0, 0, 0.58)}
+            .top_ul > .active{box-shadow: -2px 1px 2px 0px rgba(0, 0, 0, 0.58)}
+        </style>
+    </head>
+    <body class="hold-transition skin-blue layout-top-nav">
+    {% csrf_token %}
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="navbar-header">
+                                <div style="width: 50px; margin-left: 20px; text-align: center">
+                                    <img src="{% static 'images/project_logo.png' %}" alt="Tournament" class="img-responsive center-block" style="margin-left: 25px;margin-top: 10px;">
+                                    <a href="/" class="navbar-brand" style="font-size: 24px;"><b>Tournament</b></a>
+                                </div>
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                            </div>
+                            <div class="navbar-custom-menu">
+                                <ul class="nav navbar-nav">
+                                    {% if is_authenticated %}
+                                        <li class="dropdown user user-menu">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <img src="{{ user_picture }}" class="user-image" alt="User Image">
+                                                <span class="hidden-xs">{{ user_name }}</span> </a>
+                                            <ul class="dropdown-menu" style="box-shadow: rgba(0,0,0,0.58) 3px 3px 3px 3px;">
+                                                <li class="user-header">
+                                                    <img src="{{ user_picture }}" class="img-circle" alt="User Image">
+                                                    <p style="font-size: 14px;">User Name: {{ user_q.first.user_name }}</p>
+                                                    <p style="font-size: 14px;">Email: {{ user_q.first.email }}</p>
+                                                </li>
+                                                <li class="user-footer">
+                                                    <div class="pull-left">
+                                                        <a href="/UserCenter/profile" class="btn btn-default btn-flat">Profile</a>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a href="{{ sign_out }}" class="btn btn-default btn-flat">Sign out</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    <li>
+                                        <a target="_blank" href="{{ admin_url }}"><i class="fa fa-gears">&nbsp;Admin Dashboard</i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="collapse navbar-collapse" id="navbar-collapse">
+                                    <ul class="nav navbar-nav top_ul">
+                                        {% if '/UserCenter' in request.path %}
+                                            <li class="active">
+                                                {% else %}
+                                            <li>
+                                        {% endif %}
+                                        {% if is_authenticated %}
+                                            <a href="/UserCenter/login/">Profile</a>
+                                        {% else %}
+                                            <a href="/UserCenter/login/">Login/Signup</a>
+                                        {% endif %}
+                                        </li>
+                                        {% if '/Teams' in request.path %}
+                                            <li class="dropdown active">
+                                                {% else %}
+                                            <li class="dropdown">
+                                        {% endif %}
+                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Team<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu" style="box-shadow: rgba(0,0,0,0.58) 3px 3px 3px 3px;">
+                                            <li>
+                                                <a href="/Teams/list/">View All Team</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Teams/create_team/">Create Team</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Teams/manage_team/">Manage Team</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Teams/join_exit_team/">Join/Exit Team</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                        {% if '/Tournaments' in request.path %}
+                                            <li class="active">
+                                                {% else %}
+                                            <li>
+                                        {% endif %}
+                                        <a href="/Tournaments/index/">Tournaments</a>
+                                        </li>
+                                        {% if '/' == request.path %}
+                                            <li class="active">
+                                                {% else %}
+                                            <li>
+                                        {% endif %}
+                                        <a href="/">Homes</a>
+                                        </li>
+                                        {% if '/About' in request.path %}
+                                            <li class="active">
+                                                {% else %}
+                                            <li>
+                                        {% endif %}
+                                        <a href="/About/">About</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+        </header>
+            <div class="content-wrapper">
+                <div class="container-fluer">
+                    <section class="content-header">
+                        <ol class="breadcrumb">
+                            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                            <li><a href="#">Layout</a></li>
+                            <li class="active">Top Navigation</li>
+                        </ol>
+                </section>
+                    <section class="content">
+                        {% block content %}d
+                        {% endblock %}
+                    </section>
+                </div>
+            </div>
+            <footer class="main-footer">
+                <div class="container">
+                    <div class="pull-right hidden-xs">
+                        <b>Version</b> 1.0
+                    </div>
+                    <strong>Copyright &copy; 2023 <a href="/">WAD_Group_Project</a>.</strong> Finished by Eason Zhang.
+                </div>
+            </footer>
+        </div>
+        <script src="{% static 'js/jquery-3.5.1/jquery.min.js' %}"></script>
+        <script src="{% static 'css/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+        <script src="{% static 'dist/js/pages/dashboard2.js' %}"></script>
+        <script src="{% static 'js/jquery.twbsPagination/jquery.twbsPagination.min.js' %}"></script>
+    {% block bottom %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <div class="register-box hold-transition register-page">
+
+
+        <div class="register-box-body">
+            <p class="login-box-msg">Register User</p>
+            {{ errors_message }}
+
+            {{ forms.errors }}
+            <form action="/UserCenter/register/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group has-feedback">
+
+                    {{ forms.user_name }}
+
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    {{ forms.email }}
+
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    {{ forms.password }}
+
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    <input type="password" name="repassword" class="form-control" placeholder="ReInput Password" maxlength="512" required="" id="id_repassword">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    {{ forms.pronouns }}
+
+                    <span class="glyphicon glyphicon-filter form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    {{ forms.scoresaber }}
+
+                    <span class="glyphicon glyphicon-link form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    {{ forms.skillset }}
+
+                    <span class="glyphicon glyphicon-inbox form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    {{ forms.profile_picture }}
+
+                    <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+
+                    {{ forms.discord }}
+
+                    <span class="glyphicon glyphicon-cloud form-control-feedback"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+
+                        <button type="submit" class="btn btn-primary btn-block btn-flat center-block">Register</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <p>- OR -</p>
+
+                <a href="/UserCenter/login/" class="text-center">I already have a membership</a>
+
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block bottom %}
+<script>
+
+function refresh_captcha_img() {
+    $.ajax({
+        url : '/UserCenter/refresh_captcha_img/',
+        type: "POST",
+        data : {
+            'csrfmiddlewaretoken': "{{ csrf_token }}",
+
+        },
+        dataType : "text",
+        success: function( data ){
+            // alert(data);
+            if (data != 0){
+                // alert(data);
+                $("#captcha_img")[0].src = data;
+                $("#captcha_img_url_id").val(data);
+
+            }
+        }
+    });
+}
+</script>
+{% endblock %}
