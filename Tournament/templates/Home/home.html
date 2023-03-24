@@ -1,12 +1,126 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% load static %}
+<div class="title text-center">
+    <h1>SUPA Triple Tournament</h1>
+    <h8 >The future of beat saber tournaments.</h8>
+</div>
+
+<hr />
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-6">
+            <h4><u><strong>Welcome to the official home of SUPA!</strong></u></h4>
+            <br>
+            <p>Welcome to the official portal for the SUPA Triple Rumble Tournament.</p>
+            <br>
+            <p>SUPA Tournaments is an innovative tournament group looking to change the way tournaments are made and played in the <br> popular Virtual Reality title Beat Saber!
+            </p>
+            <br>
+            <p>We focus on making sure our tournaments are of a very high quality and focus on creating a unpredictable and fun <br> environment where no one knows who is going to emegre as the victor!
+            </p>
+            <br>
+            <p>So, come and watch our next live stream or join in our next tournament, as you could be the next tournament champion!</p>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <span>
+                <h5><u><strong>Featuring Tournaments such as:</strong></u></h5>
+                <br>
+                <h5>Triple Rumble</h5>
+                <br>
+                <h5>Eva</h5>
+                <br>
+                <h5>HTC</h5>
+            </span>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<h4><strong>Recent Matches</strong></h4>
+<br>
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <div class="row">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+    
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" style="text-align: center" role="listbox">
+            <div class="item active">
+                <a href="https://www.youtube.com/watch?v=rLASTYmXEnQ&ab_channel=BeatSaberLeague">
+                    <img src="{% static 'images/vid1.jpg' %}" alt="Video 1" class="img-responsive">
+                </a>
+                <div class="carousel-caption">
+                    <p>Beat Saber League Season 6!</p>
+                </div>
+            </div>
+            <div class="item" style="text-align: center">
+                <a href="https://www.youtube.com/watch?v=RgftMKBR-L8&ab_channel=BeatSaberLeague">
+                    <img src="{% static 'images/vid2.jpg' %}" alt="Video 2" class="img-responsive">
+                </a>
+                <div class="carousel-caption">
+                <p>Season 4.5 | Finals match</p>
+                </div>
+            </div>
+
+            <div class="item" style="text-align: center">
+                <a href="https://www.youtube.com/watch?v=1HsJGGePtYA&ab_channel=BeatSaberLeague">
+                    <img src="{% static 'images/vid3.jpg' %}" alt="Video 3" class="img-responsive">
+                </a>
+                <div class="carousel-caption">
+                <p>Season 4.5 | Losers Round 8</p>
+                </div>
+            </div>
+
+            <div class="item" style="text-align: center">
+                <a href="https://www.youtube.com/watch?v=GVQa73zU6Xg&ab_channel=BeatSaberLeague">
+                    <img src="{% static 'images/vid4.jpg' %}" alt="Video 4" class="img-responsive">
+                </a>
+                <div class="carousel-caption">
+                <p>Season 4.5 | Losers Round 7</p>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 
 {% endblock %}
 
 
+
+
 {% block bottom %}
+
 
 {% endblock %}
